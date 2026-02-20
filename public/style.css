@@ -93,6 +93,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     padding: var(--s4);
+    padding-bottom: var(--s6);
     gap: var(--s3);
     font-family: 'Press Start 2P', monospace;
     color: var(--c-text);
@@ -597,7 +598,7 @@ pre#retrieved-text-content {
 /* ─────────────────────────────────────────────── */
 .footer-text {
     font-size: var(--t-xs);
-    color: var(--c-border);
+    color: var(--c-dim);
     letter-spacing: 3px;
     text-align: center;
     text-transform: uppercase;
