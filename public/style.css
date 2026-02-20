@@ -293,3 +293,92 @@ input[type="text"]:focus {
 .retrieve-section {
     margin-top: 16px;
 }
+
+/* Retrieved Result Boxes */
+.retrieved-box {
+    margin-top: 16px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+}
+
+.retrieved-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background-color: #1e293b;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.retrieved-header span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.icon-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.icon-btn:hover {
+    background-color: var(--border);
+}
+
+.download-btn {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.download-btn:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+pre#retrieved-text-content {
+    padding: 14px;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 0;
+}
+
+#retrieved-image-preview {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    display: block;
+    padding: 8px;
+    background-color: var(--bg-color);
+}
+
+.file-meta {
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    color: var(--text-secondary);
+    font-size: 13px;
+}

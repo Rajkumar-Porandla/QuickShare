@@ -45,6 +45,10 @@ shareTextBtn.addEventListener('click', async () => {
     }
 });
 
+const retrievedTextBox = document.getElementById('retrieved-text-box');
+const retrievedTextContent = document.getElementById('retrieved-text-content');
+const copyRetrievedText = document.getElementById('copy-retrieved-text');
+
 retrieveTextBtn.addEventListener('click', async () => {
     const code = retrieveTextCode.value.trim();
     if (!code) return alert('Enter a code!');
@@ -53,8 +57,8 @@ retrieveTextBtn.addEventListener('click', async () => {
         const res = await fetch(`${API_URL}/text/${code}`);
         const data = await res.json();
         if (data.text) {
-            textInput.value = data.text;
-            alert('Text retrieved successfully!');
+            retrievedTextContent.textContent = data.text;
+            retrievedTextBox.classList.remove('hidden');
         } else {
             alert(data.error || 'Text not found');
         }
@@ -63,6 +67,14 @@ retrieveTextBtn.addEventListener('click', async () => {
     } finally {
         setLoading(retrieveTextBtn, false);
     }
+});
+
+copyRetrievedText.addEventListener('click', () => {
+    const text = retrievedTextContent.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        copyRetrievedText.textContent = '✅ Copied!';
+        setTimeout(() => copyRetrievedText.textContent = '📋 Copy', 2000);
+    });
 });
 
 // --- IMAGE SHARING ---
@@ -97,10 +109,32 @@ shareImageBtn.addEventListener('click', async () => {
     await uploadFile(file, shareImageBtn, imageResult, imageShareCode);
 });
 
-retrieveImageBtn.addEventListener('click', () => {
+const retrievedImageBox = document.getElementById('retrieved-image-box');
+const retrievedImagePreview = document.getElementById('retrieved-image-preview');
+const retrievedImageName = document.getElementById('retrieved-image-name');
+const downloadImageBtn = document.getElementById('download-image-btn');
+
+retrieveImageBtn.addEventListener('click', async () => {
     const code = retrieveImageCode.value.trim();
     if (!code) return alert('Enter a code!');
-    window.open(`${API_URL}/file/${code}`, '_blank');
+    setLoading(retrieveImageBtn, true);
+    try {
+        const res = await fetch(`${API_URL}/file/${code}/info`);
+        const data = await res.json();
+        if (data.originalName) {
+            retrievedImagePreview.src = `${API_URL}/file/${code}/preview`;
+            retrievedImageName.textContent = data.originalName;
+            downloadImageBtn.href = `${API_URL}/file/${code}`;
+            downloadImageBtn.download = data.originalName;
+            retrievedImageBox.classList.remove('hidden');
+        } else {
+            alert(data.error || 'File not found');
+        }
+    } catch (err) {
+        alert('Failed to retrieve image');
+    } finally {
+        setLoading(retrieveImageBtn, false);
+    }
 });
 
 // --- FILE SHARING ---
@@ -133,10 +167,34 @@ shareFileBtn.addEventListener('click', async () => {
     await uploadFile(file, shareFileBtn, fileResult, fileShareCode);
 });
 
-retrieveFileBtn.addEventListener('click', () => {
+const retrievedFileBox = document.getElementById('retrieved-file-box');
+const retrievedFileName = document.getElementById('retrieved-file-name');
+const retrievedFileSize = document.getElementById('retrieved-file-size');
+const retrievedFileType = document.getElementById('retrieved-file-type');
+const downloadFileBtn = document.getElementById('download-file-btn');
+
+retrieveFileBtn.addEventListener('click', async () => {
     const code = retrieveFileCode.value.trim();
     if (!code) return alert('Enter a code!');
-    window.open(`${API_URL}/file/${code}`, '_blank');
+    setLoading(retrieveFileBtn, true);
+    try {
+        const res = await fetch(`${API_URL}/file/${code}/info`);
+        const data = await res.json();
+        if (data.originalName) {
+            retrievedFileName.textContent = data.originalName;
+            retrievedFileSize.textContent = formatBytes(data.size);
+            retrievedFileType.textContent = data.mimeType;
+            downloadFileBtn.href = `${API_URL}/file/${code}`;
+            downloadFileBtn.download = data.originalName;
+            retrievedFileBox.classList.remove('hidden');
+        } else {
+            alert(data.error || 'File not found');
+        }
+    } catch (err) {
+        alert('Failed to retrieve file info');
+    } finally {
+        setLoading(retrieveFileBtn, false);
+    }
 });
 
 // --- UTILS ---

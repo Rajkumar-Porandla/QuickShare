@@ -151,6 +151,21 @@ app.get('/api/share/file/:code/info', (req, res) => {
     });
 });
 
+// Serve file inline (for image preview in browser)
+app.get('/api/share/file/:code/preview', (req, res) => {
+    const { code } = req.params;
+    const data = fileMetadata.get(code.toUpperCase());
+
+    if (!data) return res.status(404).json({ error: 'File not found or expired' });
+
+    const filePath = path.join(UPLOAD_DIR, data.filename);
+    if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'File missing on server' });
+
+    res.setHeader('Content-Type', data.mimeType);
+    res.setHeader('Content-Disposition', `inline; filename="${data.originalName}"`);
+    fs.createReadStream(filePath).pipe(res);
+});
+
 // Serve Frontend
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

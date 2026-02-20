@@ -45,6 +45,14 @@
                     <input type="text" id="retrieve-text-code" placeholder="Enter code to retrieve text">
                     <button id="retrieve-text-btn" class="secondary-btn">Get Text</button>
                 </div>
+
+                <div id="retrieved-text-box" class="retrieved-box hidden">
+                    <div class="retrieved-header">
+                        <span>Retrieved Text</span>
+                        <button id="copy-retrieved-text" class="icon-btn" title="Copy text">📋 Copy</button>
+                    </div>
+                    <pre id="retrieved-text-content"></pre>
+                </div>
             </section>
 
             <!-- IMAGE SHARING -->
@@ -73,6 +81,15 @@
                     <input type="text" id="retrieve-image-code" placeholder="Enter code to retrieve image">
                     <button id="retrieve-image-btn" class="secondary-btn">Get Image</button>
                 </div>
+
+                <div id="retrieved-image-box" class="retrieved-box hidden">
+                    <div class="retrieved-header">
+                        <span id="retrieved-image-name"></span>
+                        <a id="download-image-btn" class="icon-btn download-btn" title="Download image" download>⬇️
+                            Download</a>
+                    </div>
+                    <img id="retrieved-image-preview" src="" alt="Retrieved Image">
+                </div>
             </section>
 
             <!-- FILE SHARING -->
@@ -99,8 +116,19 @@
                 <div class="divider">OR</div>
 
                 <div class="retrieve-section">
-                    <input type="text" id="retrieve-file-code" placeholder="Enter code to download file">
-                    <button id="retrieve-file-btn" class="secondary-btn">Download File</button>
+                    <input type="text" id="retrieve-file-code" placeholder="Enter code to retrieve file">
+                    <button id="retrieve-file-btn" class="secondary-btn">Get File Info</button>
+                </div>
+
+                <div id="retrieved-file-box" class="retrieved-box hidden">
+                    <div class="retrieved-header">
+                        <span id="retrieved-file-name"></span>
+                        <a id="download-file-btn" class="icon-btn download-btn" title="Download file">⬇️ Download</a>
+                    </div>
+                    <div class="file-meta">
+                        <span id="retrieved-file-size"></span>
+                        <span id="retrieved-file-type"></span>
+                    </div>
                 </div>
             </section>
         </main>
