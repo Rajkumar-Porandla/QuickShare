@@ -4,52 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick Share | Instant Sharing</title>
+    <title>QUICK SHARE | PRESS START</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="app-container">
         <header>
-            <h1>Quick Share</h1>
-            <p>Instantly share text, images, and files.</p>
+            <h1>⚡ QUICK SHARE ⚡</h1>
+            <p>▶ INSERT TEXT, IMAGE OR FILE ◀</p>
         </header>
 
         <nav class="tabs">
-            <button class="tab-btn active" data-tab="text-tab">Text</button>
-            <button class="tab-btn" data-tab="image-tab">Image</button>
-            <button class="tab-btn" data-tab="file-tab">File</button>
+            <button class="tab-btn active" data-tab="text-tab">📝 TEXT</button>
+            <button class="tab-btn" data-tab="image-tab">🖼 IMAGE</button>
+            <button class="tab-btn" data-tab="file-tab">📁 FILE</button>
         </nav>
 
         <main>
             <!-- TEXT SHARING -->
             <section id="text-tab" class="tab-content active">
                 <div class="input-group">
-                    <textarea id="text-input" placeholder="Paste your text below..."></textarea>
+                    <textarea id="text-input" placeholder="PASTE YOUR TEXT HERE..."></textarea>
                 </div>
-                <button id="share-text-btn" class="primary-btn">Generate Code</button>
+                <button id="share-text-btn" class="primary-btn">▶ GENERATE CODE</button>
 
                 <div id="text-result" class="result-box hidden">
-                    <p>Share Code:</p>
+                    <p>★ SHARE CODE ★</p>
                     <div class="code-display">
                         <span id="text-share-code"></span>
-                        <button class="copy-btn" data-target="text-share-code">Copy</button>
+                        <button class="copy-btn" data-target="text-share-code">[COPY]</button>
                     </div>
-                    <p class="expiry-info">Expires in 30 minutes</p>
+                    <p class="expiry-info">▼ EXPIRES IN 30 MINS ▼</p>
                 </div>
 
                 <div class="divider">OR</div>
 
                 <div class="retrieve-section">
-                    <input type="text" id="retrieve-text-code" placeholder="Enter code to retrieve text">
-                    <button id="retrieve-text-btn" class="secondary-btn">Get Text</button>
+                    <input type="text" id="retrieve-text-code" placeholder="ENTER CODE...">
+                    <button id="retrieve-text-btn" class="secondary-btn">⬇ GET TEXT</button>
                 </div>
 
                 <div id="retrieved-text-box" class="retrieved-box hidden">
                     <div class="retrieved-header">
-                        <span>Retrieved Text</span>
-                        <button id="copy-retrieved-text" class="icon-btn" title="Copy text">📋 Copy</button>
+                        <span>■ RETRIEVED TEXT</span>
+                        <button id="copy-retrieved-text" class="icon-btn">📋 COPY</button>
                     </div>
                     <pre id="retrieved-text-content"></pre>
                 </div>
@@ -57,36 +57,35 @@
 
             <!-- IMAGE SHARING -->
             <section id="image-tab" class="tab-content">
-                <div class="upload-area" id="image-drop-zone">
+                <div class="upload-area image-zone" id="image-drop-zone">
                     <input type="file" id="image-input" accept="image/*" hidden>
-                    <p>Click to select or drag & drop an image</p>
+                    <p>CLICK OR DRAG &amp; DROP IMAGE</p>
                     <div id="image-preview-container" class="hidden">
                         <img id="image-preview" src="" alt="Preview">
                     </div>
                 </div>
-                <button id="share-image-btn" class="primary-btn" disabled>Upload & Share</button>
+                <button id="share-image-btn" class="primary-btn" disabled>⬆ UPLOAD &amp; SHARE</button>
 
                 <div id="image-result" class="result-box hidden">
-                    <p>Share Code:</p>
+                    <p>★ SHARE CODE ★</p>
                     <div class="code-display">
                         <span id="image-share-code"></span>
-                        <button class="copy-btn" data-target="image-share-code">Copy</button>
+                        <button class="copy-btn" data-target="image-share-code">[COPY]</button>
                     </div>
-                    <p class="expiry-info">Expires in 30 minutes</p>
+                    <p class="expiry-info">▼ EXPIRES IN 30 MINS ▼</p>
                 </div>
 
                 <div class="divider">OR</div>
 
                 <div class="retrieve-section">
-                    <input type="text" id="retrieve-image-code" placeholder="Enter code to retrieve image">
-                    <button id="retrieve-image-btn" class="secondary-btn">Get Image</button>
+                    <input type="text" id="retrieve-image-code" placeholder="ENTER CODE...">
+                    <button id="retrieve-image-btn" class="secondary-btn">⬇ GET IMAGE</button>
                 </div>
 
                 <div id="retrieved-image-box" class="retrieved-box hidden">
                     <div class="retrieved-header">
-                        <span id="retrieved-image-name"></span>
-                        <a id="download-image-btn" class="icon-btn download-btn" title="Download image" download>⬇️
-                            Download</a>
+                        <span id="retrieved-image-name">■ IMAGE</span>
+                        <a id="download-image-btn" class="icon-btn download-btn" download>💾 SAVE</a>
                     </div>
                     <img id="retrieved-image-preview" src="" alt="Retrieved Image">
                 </div>
@@ -94,36 +93,36 @@
 
             <!-- FILE SHARING -->
             <section id="file-tab" class="tab-content">
-                <div class="upload-area" id="file-drop-zone">
+                <div class="upload-area file-zone" id="file-drop-zone">
                     <input type="file" id="file-input" hidden>
-                    <p>Click to select or drag & drop any file</p>
+                    <p>CLICK OR DRAG &amp; DROP FILE</p>
                     <div id="file-info" class="hidden">
                         <span id="file-name"></span>
                         <span id="file-size"></span>
                     </div>
                 </div>
-                <button id="share-file-btn" class="primary-btn" disabled>Upload & Share</button>
+                <button id="share-file-btn" class="primary-btn" disabled>⬆ UPLOAD &amp; SHARE</button>
 
                 <div id="file-result" class="result-box hidden">
-                    <p>Share Code:</p>
+                    <p>★ SHARE CODE ★</p>
                     <div class="code-display">
                         <span id="file-share-code"></span>
-                        <button class="copy-btn" data-target="file-share-code">Copy</button>
+                        <button class="copy-btn" data-target="file-share-code">[COPY]</button>
                     </div>
-                    <p class="expiry-info">Expires in 30 minutes</p>
+                    <p class="expiry-info">▼ EXPIRES IN 30 MINS ▼</p>
                 </div>
 
                 <div class="divider">OR</div>
 
                 <div class="retrieve-section">
-                    <input type="text" id="retrieve-file-code" placeholder="Enter code to retrieve file">
-                    <button id="retrieve-file-btn" class="secondary-btn">Get File Info</button>
+                    <input type="text" id="retrieve-file-code" placeholder="ENTER CODE...">
+                    <button id="retrieve-file-btn" class="secondary-btn">⬇ GET FILE INFO</button>
                 </div>
 
                 <div id="retrieved-file-box" class="retrieved-box hidden">
                     <div class="retrieved-header">
-                        <span id="retrieved-file-name"></span>
-                        <a id="download-file-btn" class="icon-btn download-btn" title="Download file">⬇️ Download</a>
+                        <span id="retrieved-file-name">■ FILE</span>
+                        <a id="download-file-btn" class="icon-btn download-btn">💾 SAVE</a>
                     </div>
                     <div class="file-meta">
                         <span id="retrieved-file-size"></span>
