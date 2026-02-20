@@ -603,6 +603,8 @@ pre#retrieved-text-content {
     text-align: center;
     text-transform: uppercase;
     animation: blink 1.4s step-end infinite;
+    margin-top: var(--s5);
+    /* 34px — clears the card outline-offset */
 }
 
 @keyframes blink {
