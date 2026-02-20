@@ -40,22 +40,22 @@
     --s6: 55px;
 
     /* ── Golden Ratio type scale ────────────────── */
-    /* Base: 8px  →  ×1.618  →  13px  →  21px      */
-    --t-xs: 6px;
-    --t-sm: 7px;
-    --t-md: 8px;
+    /* Base: 10px  →  ×1.618  →  16px  →  26px      */
+    --t-xs: 9px;
+    --t-sm: 10px;
+    --t-md: 11px;
     /* body / labels          */
-    --t-lg: 10px;
+    --t-lg: 13px;
     /* section heads          */
-    --t-xl: 13px;
+    --t-xl: 16px;
     /* code display           */
-    --t-2xl: 18px;
+    --t-2xl: 22px;
     /* hero title             */
-    --t-code: 21px;
+    --t-code: 26px;
     /* share code             */
 
     /* ── Layout ─────────────────────────────────── */
-    --card-w: 480px;
+    --card-w: 540px;
     /* max card width         */
     --card-pad: var(--s5);
     /* 34px padding           */
@@ -244,13 +244,10 @@ input[type="text"] {
 }
 
 textarea {
-    height: 144px;
-    /* 144 / 480 ≈ 0.3 — calm, not cramped */
+    height: 160px;
     resize: none;
     padding: var(--s3);
-    /* 13px */
     margin-bottom: var(--s4);
-    /* 21px */
 }
 
 input[type="text"] {
@@ -640,14 +637,17 @@ pre#retrieved-text-content {
 @media (max-width: 500px) {
     :root {
         --card-pad: var(--s4);
-        /* 21px on mobile */
     }
 
     header h1 {
-        font-size: 12px;
+        font-size: 15px;
     }
 
     .code-display span {
-        font-size: 15px;
+        font-size: 18px;
+    }
+
+    .tab-btn {
+        font-size: var(--t-xs);
     }
 }
