@@ -1,6 +1,32 @@
 const API_URL = '/api/share';
 
-// Tabs
+// ── Toast Notification System ────────────────────
+(function () {
+    const container = document.createElement('div');
+    container.id = 'toast-container';
+    document.body.appendChild(container);
+
+    window.showToast = function (message, type = 'info') {
+        const prefixMap = { info: '// info', success: '// ok', error: '// err' };
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.setAttribute('data-prefix', prefixMap[type] || '//');
+        toast.textContent = message;
+
+        const bar = document.createElement('div');
+        bar.className = 'toast-bar';
+        toast.appendChild(bar);
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.2s';
+            setTimeout(() => toast.remove(), 200);
+        }, 3000);
+    };
+})();
+
+// ── Tabs ─────────────────────────────────────────
 const tabs = document.querySelectorAll('.tab-btn');
 const contents = document.querySelectorAll('.tab-content');
 
@@ -13,7 +39,7 @@ tabs.forEach(tab => {
     });
 });
 
-// --- TEXT SHARING ---
+// ── TEXT SHARING ─────────────────────────────────
 const textInput = document.getElementById('text-input');
 const shareTextBtn = document.getElementById('share-text-btn');
 const textResult = document.getElementById('text-result');
@@ -23,7 +49,7 @@ const retrieveTextCode = document.getElementById('retrieve-text-code');
 
 shareTextBtn.addEventListener('click', async () => {
     const text = textInput.value.trim();
-    if (!text) return alert('Please enter some text!');
+    if (!text) return showToast('Please enter some text!', 'info');
     setLoading(shareTextBtn, true);
     try {
         const res = await fetch(`${API_URL}/text`, {
@@ -35,11 +61,12 @@ shareTextBtn.addEventListener('click', async () => {
         if (data.code) {
             textShareCode.textContent = data.code;
             textResult.classList.remove('hidden');
+            showToast('Code generated!', 'success');
         } else {
-            alert('Error generating code');
+            showToast('Error generating code', 'error');
         }
-    } catch (err) {
-        alert('Failed to share text');
+    } catch {
+        showToast('Failed to share text', 'error');
     } finally {
         setLoading(shareTextBtn, false);
     }
@@ -51,7 +78,7 @@ const copyRetrievedText = document.getElementById('copy-retrieved-text');
 
 retrieveTextBtn.addEventListener('click', async () => {
     const code = retrieveTextCode.value.trim();
-    if (!code) return alert('Enter a code!');
+    if (!code) return showToast('Enter a code!', 'info');
     setLoading(retrieveTextBtn, true);
     try {
         const res = await fetch(`${API_URL}/text/${code}`);
@@ -59,11 +86,12 @@ retrieveTextBtn.addEventListener('click', async () => {
         if (data.text) {
             retrievedTextContent.textContent = data.text;
             retrievedTextBox.classList.remove('hidden');
+            showToast('Text retrieved!', 'success');
         } else {
-            alert(data.error || 'Text not found');
+            showToast(data.error || 'Text not found', 'error');
         }
-    } catch (err) {
-        alert('Failed to retrieve text');
+    } catch {
+        showToast('Failed to retrieve text', 'error');
     } finally {
         setLoading(retrieveTextBtn, false);
     }
@@ -72,12 +100,13 @@ retrieveTextBtn.addEventListener('click', async () => {
 copyRetrievedText.addEventListener('click', () => {
     const text = retrievedTextContent.textContent;
     navigator.clipboard.writeText(text).then(() => {
-        copyRetrievedText.textContent = '✅ Copied!';
-        setTimeout(() => copyRetrievedText.textContent = '📋 Copy', 2000);
+        showToast('Copied to clipboard!', 'success');
+        copyRetrievedText.textContent = 'Copied!';
+        setTimeout(() => copyRetrievedText.textContent = 'Copy', 2000);
     });
 });
 
-// --- IMAGE SHARING ---
+// ── IMAGE SHARING ────────────────────────────────
 const imageDropZone = document.getElementById('image-drop-zone');
 const imageInput = document.getElementById('image-input');
 const imagePreview = document.getElementById('image-preview');
@@ -116,7 +145,7 @@ const downloadImageBtn = document.getElementById('download-image-btn');
 
 retrieveImageBtn.addEventListener('click', async () => {
     const code = retrieveImageCode.value.trim();
-    if (!code) return alert('Enter a code!');
+    if (!code) return showToast('Enter a code!', 'info');
     setLoading(retrieveImageBtn, true);
     try {
         const res = await fetch(`${API_URL}/file/${code}/info`);
@@ -127,17 +156,18 @@ retrieveImageBtn.addEventListener('click', async () => {
             downloadImageBtn.href = `${API_URL}/file/${code}`;
             downloadImageBtn.download = data.originalName;
             retrievedImageBox.classList.remove('hidden');
+            showToast('Image loaded!', 'success');
         } else {
-            alert(data.error || 'File not found');
+            showToast(data.error || 'File not found', 'error');
         }
-    } catch (err) {
-        alert('Failed to retrieve image');
+    } catch {
+        showToast('Failed to retrieve image', 'error');
     } finally {
         setLoading(retrieveImageBtn, false);
     }
 });
 
-// --- FILE SHARING ---
+// ── FILE SHARING ─────────────────────────────────
 const fileDropZone = document.getElementById('file-drop-zone');
 const fileInput = document.getElementById('file-input');
 const fileInfo = document.getElementById('file-info');
@@ -175,7 +205,7 @@ const downloadFileBtn = document.getElementById('download-file-btn');
 
 retrieveFileBtn.addEventListener('click', async () => {
     const code = retrieveFileCode.value.trim();
-    if (!code) return alert('Enter a code!');
+    if (!code) return showToast('Enter a code!', 'info');
     setLoading(retrieveFileBtn, true);
     try {
         const res = await fetch(`${API_URL}/file/${code}/info`);
@@ -187,17 +217,18 @@ retrieveFileBtn.addEventListener('click', async () => {
             downloadFileBtn.href = `${API_URL}/file/${code}`;
             downloadFileBtn.download = data.originalName;
             retrievedFileBox.classList.remove('hidden');
+            showToast('File info loaded!', 'success');
         } else {
-            alert(data.error || 'File not found');
+            showToast(data.error || 'File not found', 'error');
         }
-    } catch (err) {
-        alert('Failed to retrieve file info');
+    } catch {
+        showToast('Failed to retrieve file info', 'error');
     } finally {
         setLoading(retrieveFileBtn, false);
     }
 });
 
-// --- UTILS ---
+// ── UTILS ────────────────────────────────────────
 function setupDragAndDrop(zone, input) {
     zone.addEventListener('click', () => input.click());
     zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
@@ -222,11 +253,12 @@ async function uploadFile(file, btn, resultBox, codeDisplay) {
         if (data.code) {
             codeDisplay.textContent = data.code;
             resultBox.classList.remove('hidden');
+            showToast('Uploaded! Share the code.', 'success');
         } else {
-            alert('Upload failed');
+            showToast('Upload failed', 'error');
         }
-    } catch (err) {
-        alert('Upload failed');
+    } catch {
+        showToast('Upload failed', 'error');
     } finally {
         setLoading(btn, false);
     }
@@ -239,7 +271,9 @@ function setLoading(btn, isLoading) {
         btn.disabled = true;
     } else {
         btn.textContent = btn.dataset.originalText;
-        btn.disabled = false;
+        btn.disabled = (btn === shareImageBtn || btn === shareFileBtn)
+            ? !(imageInput.files[0] || fileInput.files[0])
+            : false;
     }
 }
 
@@ -256,6 +290,7 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const textToCopy = document.getElementById(btn.dataset.target).textContent;
         navigator.clipboard.writeText(textToCopy).then(() => {
+            showToast('Code copied!', 'success');
             const original = btn.textContent;
             btn.textContent = 'Copied!';
             setTimeout(() => btn.textContent = original, 2000);

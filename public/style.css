@@ -632,6 +632,103 @@ pre#retrieved-text-content {
 }
 
 /* ─────────────────────────────────────────────── */
+/*  TOAST NOTIFICATIONS                            */
+/* ─────────────────────────────────────────────── */
+#toast-container {
+    position: fixed;
+    top: var(--s4);
+    right: var(--s4);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    pointer-events: none;
+}
+
+.toast {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-left: 3px solid var(--c-gold);
+    padding: var(--s3) var(--s4);
+    font-family: 'Press Start 2P', monospace;
+    font-size: var(--t-xs);
+    color: var(--c-text);
+    line-height: 1.8;
+    max-width: 280px;
+    pointer-events: all;
+    position: relative;
+    animation: toast-in 0.15s steps(3) forwards;
+    letter-spacing: 1px;
+}
+
+.toast::before {
+    content: attr(data-prefix);
+    display: block;
+    font-size: 6px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: var(--s2);
+    opacity: 0.7;
+}
+
+.toast.toast-success {
+    border-left-color: var(--c-green);
+}
+
+.toast.toast-success::before {
+    color: var(--c-green);
+}
+
+.toast.toast-error {
+    border-left-color: #7A3D3D;
+}
+
+.toast.toast-error::before {
+    color: #b05050;
+}
+
+.toast.toast-info {
+    border-left-color: var(--c-gold);
+}
+
+.toast.toast-info::before {
+    color: var(--c-gold);
+}
+
+/* progress bar at bottom */
+.toast-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.3;
+    animation: toast-bar 3s linear forwards;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toast-bar {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+/* ─────────────────────────────────────────────── */
 /*  RESPONSIVE (≤ 480px)                           */
 /* ─────────────────────────────────────────────── */
 @media (max-width: 500px) {
