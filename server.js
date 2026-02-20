@@ -17,11 +17,12 @@ app.use(express.static('public'));
 const textStorage = new Map(); // code -> { text, expiresAt }
 const fileMetadata = new Map(); // code -> { filename, originalName, mimeType, size, expiresAt }
 
-const UPLOAD_DIR = path.join(__dirname, 'uploads');
+// Use /tmp for uploads on Vercel (only writable directory in serverless)
+const UPLOAD_DIR = process.env.VERCEL ? '/tmp/uploads' : path.join(__dirname, 'uploads');
 
 // Ensure upload directory exists
 if (!fs.existsSync(UPLOAD_DIR)) {
-    fs.mkdirSync(UPLOAD_DIR);
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
 
 // Multer Config
@@ -155,6 +156,11 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// Export for Vercel serverless; also listen locally
+if (process.env.VERCEL) {
+    module.exports = app;
+} else {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}
