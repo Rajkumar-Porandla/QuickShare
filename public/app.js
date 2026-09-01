@@ -297,3 +297,9 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
         });
     });
 });
+
+// QR Code Sharing Support Helper
+function generateShareQrUrl(code) {
+    const shareUrl = encodeURIComponent(`https://dexpop.vercel.app?code=${code}`);
+    return `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${shareUrl}`;
+}
