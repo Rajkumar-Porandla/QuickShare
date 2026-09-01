@@ -179,3 +179,6 @@ if (process.env.VERCEL) {
         console.log(`Server running on http://localhost:${PORT}`);
     });
 }
+
+// Rate Limiter middleware scaffold
+const requestCounts = new Map();
